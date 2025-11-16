@@ -1,0 +1,29 @@
+[Unit]
+Description=Prometheus Monitoring System
+After=network-online.target
+Before=grafana.service
+
+[Container]
+Image=docker.io/prom/prometheus:latest
+ContainerName=prometheus
+AutoUpdate=registry
+
+Volume=%h/.local/share/containers/monitoring/prometheus:/prometheus:Z
+Volume=%h/.config/containers/monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:Z
+Volume=%h/.config/containers/monitoring/prometheus/alerts:/etc/prometheus/alerts:Z
+
+PublishPort=9090:9090
+
+Exec=--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.retention.time=30d --web.enable-lifecycle
+
+Network=monitoring.network
+
+Label=app=monitoring
+Label=service=prometheus
+
+[Service]
+Restart=always
+TimeoutStartSec=900
+
+[Install]
+WantedBy=multi-user.target default.target

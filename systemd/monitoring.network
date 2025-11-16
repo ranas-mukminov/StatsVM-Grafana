@@ -1,0 +1,7 @@
+[Network]
+NetworkName=monitoring
+Driver=bridge
+Label=app=monitoring
+
+[Install]
+WantedBy=multi-user.target default.target

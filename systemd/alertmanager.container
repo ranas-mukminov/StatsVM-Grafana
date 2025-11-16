@@ -1,0 +1,28 @@
+[Unit]
+Description=Prometheus Alertmanager
+After=network-online.target prometheus.service
+Wants=prometheus.service
+
+[Container]
+Image=docker.io/prom/alertmanager:latest
+ContainerName=alertmanager
+AutoUpdate=registry
+
+Volume=%h/.local/share/containers/monitoring/alertmanager:/alertmanager:Z
+Volume=%h/.config/containers/monitoring/prometheus/alertmanager.yml:/etc/alertmanager/alertmanager.yml:Z
+
+PublishPort=9093:9093
+
+Exec=--config.file=/etc/alertmanager/alertmanager.yml --storage.path=/alertmanager
+
+Network=monitoring.network
+
+Label=app=monitoring
+Label=service=alertmanager
+
+[Service]
+Restart=always
+TimeoutStartSec=300
+
+[Install]
+WantedBy=multi-user.target default.target

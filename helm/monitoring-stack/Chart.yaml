@@ -1,0 +1,17 @@
+apiVersion: v2
+name: monitoring-stack
+description: A modern monitoring stack with Prometheus, Grafana, and Loki
+type: application
+version: 1.0.0
+appVersion: "1.0"
+keywords:
+  - monitoring
+  - prometheus
+  - grafana
+  - loki
+  - observability
+home: https://github.com/ranas-mukminov/StatsVM-Grafana
+sources:
+  - https://github.com/ranas-mukminov/StatsVM-Grafana
+maintainers:
+  - name: Ranas Mukminov

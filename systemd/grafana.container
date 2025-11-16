@@ -1,0 +1,30 @@
+[Unit]
+Description=Grafana Monitoring Dashboard
+After=network-online.target prometheus.service loki.service
+Wants=prometheus.service loki.service
+
+[Container]
+Image=docker.io/grafana/grafana:latest
+ContainerName=grafana
+AutoUpdate=registry
+
+Volume=%h/.local/share/containers/monitoring/grafana:/var/lib/grafana:Z
+Volume=%h/.config/containers/monitoring/grafana/provisioning:/etc/grafana/provisioning:Z
+
+PublishPort=3000:3000
+
+Environment=GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+Environment=GF_INSTALL_PLUGINS=grafana-piechart-panel
+Environment=GF_SERVER_ROOT_URL=http://localhost:3000
+
+Network=monitoring.network
+
+Label=app=monitoring
+Label=service=grafana
+
+[Service]
+Restart=always
+TimeoutStartSec=900
+
+[Install]
+WantedBy=multi-user.target default.target
