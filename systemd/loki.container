@@ -1,0 +1,28 @@
+[Unit]
+Description=Loki Log Aggregation System
+After=network-online.target
+Before=grafana.service
+
+[Container]
+Image=docker.io/grafana/loki:latest
+ContainerName=loki
+AutoUpdate=registry
+
+Volume=%h/.local/share/containers/monitoring/loki:/loki:Z
+Volume=%h/.config/containers/monitoring/loki/loki-config.yml:/etc/loki/local-config.yaml:Z
+
+PublishPort=3100:3100
+
+Exec=-config.file=/etc/loki/local-config.yaml
+
+Network=monitoring.network
+
+Label=app=monitoring
+Label=service=loki
+
+[Service]
+Restart=always
+TimeoutStartSec=900
+
+[Install]
+WantedBy=multi-user.target default.target

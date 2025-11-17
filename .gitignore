@@ -1,4 +1,52 @@
 .DS_Store
 .vagrant/
-grafana/
 index.html
+
+# Docker volumes and data
+**/prometheus-data/
+**/grafana-data/
+**/loki-data/
+**/alertmanager-data/
+
+# Backups
+backups/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Terraform
+terraform/.terraform/
+terraform/*.tfstate
+terraform/*.tfstate.*
+terraform/.terraform.lock.hcl
+
+# Logs
+*.log
+logs/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+*.bak
+
+# Temporary files
+tmp/
+temp/

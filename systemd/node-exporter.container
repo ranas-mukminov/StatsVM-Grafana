@@ -1,0 +1,27 @@
+[Unit]
+Description=Node Exporter for Prometheus
+After=network-online.target
+Before=prometheus.service
+
+[Container]
+Image=docker.io/prom/node-exporter:latest
+ContainerName=node-exporter
+AutoUpdate=registry
+
+Volume=/:/host:ro,rslave
+
+PublishPort=9100:9100
+
+Exec=--path.rootfs=/host --path.procfs=/host/proc --path.sysfs=/host/sys
+
+Network=monitoring.network
+
+Label=app=monitoring
+Label=service=node-exporter
+
+[Service]
+Restart=always
+TimeoutStartSec=300
+
+[Install]
+WantedBy=multi-user.target default.target
